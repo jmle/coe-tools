@@ -47,7 +47,7 @@ int main(int argc, char *argv[]) {
     return 0;
 }
 
-uint8 * unpackSprite(uint8 *data, uint8 *dest) {
+void unpackSprite(uint8 *data, uint8 *dest) {
 	uint16 width = *(data + 0);
 	uint16 height = *(data + 2);
 
@@ -72,8 +72,6 @@ uint8 * unpackSprite(uint8 *data, uint8 *dest) {
 			}
 		}
 	}
-
-	return dest;
 }
 
 void extractSpr(char *sprFilename, char *palFilename) {
@@ -102,12 +100,12 @@ void extractSpr(char *sprFilename, char *palFilename) {
 		uint16 width = *(data + 0);
 		uint16 height = *(data + 2);
 		auto *dest = new uint8[width * height]();
-		uint8 *spr = unpackSprite(data, dest);
+		unpackSprite(data, dest);
 
 		bitmap_image image(width, height);
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
-				RGB color = getColor(*(spr + (width * y + x)), palBytes);
+				RGB color = getColor(*(dest + (width * y + x)), palBytes);
 				image.set_pixel(x, y, color);
 			}
 		}
@@ -115,7 +113,6 @@ void extractSpr(char *sprFilename, char *palFilename) {
 
 		delete[] data;
 		delete[] dest;
-		delete &image;
 	}
 
 	delete[] offsets;
