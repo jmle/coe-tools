@@ -1,6 +1,7 @@
 #ifndef COE_TOOLS_MAIN_H
 #define COE_TOOLS_MAIN_H
 
+typedef signed char int8;
 typedef unsigned char uint8;
 typedef unsigned short uint16;
 typedef unsigned int uint32;

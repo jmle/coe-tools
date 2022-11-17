@@ -57,7 +57,7 @@ void unpackSprite(uint8 *data, uint8 *dest) {
 		uint y = 0, yc = height;
 		uint8 *row = dest + p;
 		while (yc) {
-			uint8 cmd = *data++;
+			int8 cmd = *data++;
 			if (cmd == 0) {
 				--yc;
 				y++;
@@ -109,7 +109,8 @@ void extractSpr(char *sprFilename, char *palFilename) {
 				image.set_pixel(x, y, color);
 			}
 		}
-		image.save_image(strcat(sprFilename, ".bmp"));
+		std::string filename = ((std::string)sprFilename).append(std::to_string(i)).append(".bmp");
+		image.save_image(filename);
 
 		delete[] data;
 		delete[] dest;
